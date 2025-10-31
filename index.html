@@ -185,18 +185,9 @@
     /* small loader notice */
     .loading-note{font-size:12px;opacity:0.7;margin-top:6px}
     
-    /* Auto-redirect notification */
+    /* Hide redirect notice */
     .redirect-notice {
-      margin-top: 10px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      animation: fadeInOut 4s infinite;
-    }
-    
-    @keyframes fadeInOut {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
+      display: none;
     }
   </style>
 </head>
@@ -239,6 +230,7 @@
           <i class="fa-brands fa-telegram-plane"></i> 
           Join Telegram Channel
         </a>
+        <!-- Redirect notice hidden -->
         <div class="redirect-notice" id="redirect-notice">Auto-redirecting to Telegram in <span id="countdown">3</span> seconds...</div>
         <div class="loading-note" id="loading-note"></div>
       </div>
@@ -327,24 +319,7 @@
       return slide;
     }
 
-    // Auto-redirect functionality
-    let countdownInterval;
-    let redirectUrl = defaults.channelLink;
-    
-    function startAutoRedirect() {
-      const countdownElement = document.getElementById('countdown');
-      let seconds = 3;
-      
-      countdownInterval = setInterval(() => {
-        seconds--;
-        countdownElement.textContent = seconds;
-        
-        if (seconds <= 0) {
-          clearInterval(countdownInterval);
-          window.location.href = redirectUrl;
-        }
-      }, 1000);
-    }
+    // Auto-redirect functionality REMOVED
 
     // populate UI with DB values
     function applySiteData(data){
@@ -362,9 +337,6 @@
 
       document.getElementById('quotex-link').href = qlink;
       document.getElementById('binolla-link').href = blink;
-
-      // Set redirect URL
-      redirectUrl = channel;
 
       // update review slides (clear and inject)
       const wrapper = document.getElementById('reviews-wrapper');
@@ -395,16 +367,14 @@
       if(val) applySiteData(val);
       else applySiteData({});
       
-      // Start auto-redirect countdown after data is loaded
-      setTimeout(startAutoRedirect, 4000); // 4 seconds after page load
+      // Auto-redirect code REMOVED
     }, error => {
       console.error('Firebase read error:', error);
       applySiteData({}); // apply defaults
       const ln = document.getElementById('loading-note');
       if(ln) ln.textContent = 'Unable to load remote data (using defaults)';
       
-      // Start auto-redirect countdown even if there's an error
-      setTimeout(startAutoRedirect, 4000); // 4 seconds after page load
+      // Auto-redirect code REMOVED
     });
   </script>
 
